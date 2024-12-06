@@ -1,9 +1,10 @@
 from common_functions import load_input
 
 if __name__ == '__main__':
+    real_data = False
+    filename = "real_data.txt" if real_data else "example.txt"
     # Day 1, part 1
-    #data = load_input('example.txt')
-    data = load_input('real_data.txt')
+    data = load_input(filename)
     print(data)
     left_list = [int(i.split()[0]) for i in data]
     left_list.sort()
