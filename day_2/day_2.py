@@ -1,9 +1,11 @@
 from common_functions import get_real_data
 
-def get_sorted_and_reversed(row: list[int]) -> (list[int], list[int]):
+def check_get_sorted_and_reversed(row: list[int]) -> bool:
     sorted_row = row.copy()
     sorted_row.sort()
-    return sorted_row, list(reversed(sorted_row))
+    if row == sorted_row or row == list(reversed(sorted_row)):
+        return True
+    return False
 
 def check_if_row_is_safe(row: list[int]) -> bool:
     for i in range(1, len(row)):
@@ -25,12 +27,10 @@ if __name__ == '__main__':
     print(data)
     safe_reports = []
     for row in data:
-        sorted_row, reverse_row = get_sorted_and_reversed(row)
-        print(f"Sorted row: {sorted_row}, reverse row: {reverse_row}")
         # If a report is already sorted or reverse sorted correctly, we only need to check the differences between the values
-        if row == sorted_row or row == reverse_row:
+        if check_get_sorted_and_reversed(row):
             safe_reports.append(row)
             if not check_if_row_is_safe(row):
-               safe_reports.pop()
+                safe_reports.pop()
     print(safe_reports)
     print(len(safe_reports))
