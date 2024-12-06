@@ -17,3 +17,10 @@ if __name__ == '__main__':
         distance.append(abs(item - right_list[i]))
     print(distance)
     print(sum(distance))
+    # Day 1, part 2
+    similarity = []
+    for item in left_list:
+        item_count = right_list.count(item)
+        print(f"{item}: {item_count}")
+        similarity.append(item * item_count)
+    print(sum(similarity))
