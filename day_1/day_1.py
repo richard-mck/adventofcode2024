@@ -4,10 +4,10 @@ if __name__ == '__main__':
     # Day 1, part 1
     data = get_real_data(False)
     print(data)
-    left_list = [int(i.split()[0]) for i in data]
+    left_list = [int(i[0]) for i in data]
     left_list.sort()
     print(left_list)
-    right_list = [int(i.split()[1]) for i in data]
+    right_list = [int(i[1]) for i in data]
     right_list.sort()
     print(right_list)
     distance = []
