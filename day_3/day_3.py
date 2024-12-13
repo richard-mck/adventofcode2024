@@ -21,3 +21,16 @@ if __name__ == '__main__':
            and i[0] == "("
     ]
     print(f"Split on mul {multipliers}")
+    vals = []
+    for item in multipliers:
+        nums = split_tuple_between_brackets(item)
+        try:
+            first = int(nums[0])
+            second = int(nums[1])
+        except ValueError:
+            continue
+        print(f"item: {item} nums: {nums}")
+        vals.append(int(nums[0]) * int(nums[1]))
+    print(vals)
+    print(f"Total sum {sum(vals)}")
+    # Part 2
