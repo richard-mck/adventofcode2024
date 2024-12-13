@@ -34,3 +34,8 @@ if __name__ == '__main__':
     print(vals)
     print(f"Total sum {sum(vals)}")
     # Part 2
+    enable_mult = "do()"
+    disable_mult = "don't()"
+    data_2 = get_real_data(False, example_data="example2.txt")
+    print(data_2)
+    # Find the positions of do and don't
