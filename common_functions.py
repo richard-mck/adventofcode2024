@@ -3,7 +3,7 @@
 def load_input(filename: str) -> list:
     with open(filename, "r") as file:
         contents = file.read().splitlines()
-        contents = [item.split() for item in contents]
+        #contents = [item.split() for item in contents]
     return contents
 
 def get_real_data(use_real_data: bool, real_data="real_data.txt", example_data="example.txt") -> list[str]:
