@@ -12,6 +12,16 @@ def get_real_data(use_real_data: bool, real_data="real_data.txt", example_data="
     else:
         return load_input(example_data)
 
+def transpose_data(row_based_data: list[str]) -> list[str]:
+    """Given a grid of strings, return the same grid transformed into columns instead of rows"""
+    result = []
+    for i in range(len(row_based_data[0])):
+        temp_list = []
+        for j in range(len(row_based_data)):
+            temp_list.append(row_based_data[j][i])
+        result.append("".join(temp_list))
+    return result
+
 class Tile(object):
     """A single unit within a greater grid"""
 
@@ -35,7 +45,7 @@ class Grid(object):
         (i, j) = pos
         return 0 <= i < self.height and 0 <= j < self.width
 
-    def get_neighbours(self, pos: tuple[int, int]) -> list[tuple[int, int]]:
+    def get_neighbours(self, pos: tuple[int, int], include_diags=False) -> list[tuple[int, int]]:
         (i, j) = pos
         all_neighbours = [
             (i, j + 1),  # Right
@@ -43,6 +53,13 @@ class Grid(object):
             (i, j - 1),  # Left
             (i - 1, j),  # Up
         ]
+        if include_diags:
+            all_neighbours += [
+                (i - 1, j + 1),  # Right/Up
+                (i + 1, j + 1),  # Right/Down
+                (i + 1, j - 1),  # Left/Down
+                (i - 1, j - 1),  # Left/Up
+            ]
         all_neighbours = [k for k in all_neighbours if self.inside_grid(k)]
         return all_neighbours
 
