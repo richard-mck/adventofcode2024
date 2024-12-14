@@ -38,15 +38,18 @@ if __name__ == '__main__':
     print(f"Len rotated_rows: {len(rotated_rows)}, len rotated_cols: {len(rotated_columns)}")
     xmas_rotated_rows = [i.count(XMAS) for i in rotated_rows]
     xmas_rotated_cols = [i.count(XMAS) for i in rotated_columns]
-    xmas_rev_rot_rows = [i.count(SAMX) for i in rotated_rows]
-    xmas_rev_rot_cols = [i.count(SAMX) for i in rotated_columns]
+    samx_rotated_rows = [i.count(SAMX) for i in rotated_rows]
+    samx_rotated_cols = [i.count(SAMX) for i in rotated_columns]
 
     print(f"xmas_rows: {xmas_rows}, xmas_cols: {xmas_cols}, rev_rows: {rev_rows}, rev_cols: {rev_cols} ")
     print(
-        f"xmas_rows: {xmas_rotated_rows},\n xmas_cols: {xmas_rotated_cols},\n rev_rows: {xmas_rev_rot_rows},\n rev_cols: {xmas_rev_rot_cols} ")
+        f"xmas_rows: {xmas_rotated_rows},\n xmas_cols: {xmas_rotated_cols},\n rev_rows: {samx_rotated_rows},\n rev_cols: {samx_rotated_cols} ")
+    print(f"row: {sum(xmas_rows)}, col: {sum(xmas_cols)}, rev_rows: {sum(rev_rows)}, rev_col: {sum(rev_cols)}")
     print(
-        sum(xmas_cols) + sum(xmas_cols) + sum(rev_rows) + sum(rev_cols)
-        + sum(xmas_rotated_rows) + sum(xmas_rotated_cols) + sum(xmas_rev_rot_rows) + sum(xmas_rev_rot_cols)
+        f"row: {sum(xmas_rotated_rows)}, col: {sum(xmas_rotated_cols)}, rev_rows: {sum(samx_rotated_rows)}, rev_col: {sum(samx_rotated_cols)}")
+    print(
+        sum(xmas_rows) + sum(xmas_cols) + sum(rev_rows) + sum(rev_cols)
+        + sum(xmas_rotated_rows) + sum(xmas_rotated_cols) + sum(samx_rotated_rows) + sum(samx_rotated_cols)
     )
     # For every point in the grid, we need to check if xmas is present horizontal, vertical, diagonal, written backwards, or even overlapping other words
     # The easiest way to do this would be a sweep around the compass points (including half intervals) for each point on the grid
