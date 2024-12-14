@@ -1,6 +1,22 @@
-from common_functions import get_real_data, Grid
+import pprint
+from common_functions import get_real_data, transpose_data
 
 XMAS = "XMAS"
+SAMX = "SAMX"
+
+def rotate_list_45_degrees(m: int, n: int, data: list[str]) -> list:
+    counter = 0
+    rotated_data = []
+    while counter < 2 * n - 1:
+        row = []
+        for i in range(m):
+            for j in range(n):
+                if i + j == counter:
+                    row.append(data[i][j])
+        row.reverse()
+        rotated_data.append("".join(row))
+        counter += 1
+    return rotated_data
 
 if __name__ == '__main__':
     data = get_real_data(False)
