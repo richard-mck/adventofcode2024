@@ -59,3 +59,17 @@ if __name__ == '__main__':
     # And we can discard any searches that take us off the grid generally
     # Alternately, we can count the occurences in each row, column, then rotate the data 45 degrees and repeat
 
+    # Part 2
+    # We only need to check squares with A, then we check the surrounding diagonals for the relevant values
+    # We could do some clever logic, or we could brute force it with a stupid lookup table as there a limited number of
+    # possible combinations. Stupid is the way to go
+    #   1       2       3       4
+    # m . m | s . m | m . s | s . s
+    # . a . | . a . | . a . | . a .
+    # s . s | s . m | m . s | m . m
+    lookup_table = [
+        [["m", "m"], ["s", "s"]], # 1
+        [["s", "m"], ["s", "m"]], # 2
+        [["m", "s"], ["m", "s"]], # 3
+        [["s", "s"], ["m", "m"]], # 4
+    ]
