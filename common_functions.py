@@ -3,6 +3,8 @@
 def load_input(filename: str) -> list:
     with open(filename, "r") as file:
         contents = file.read().split("\n")
+    if contents[-1] == "":
+        return contents[:-1]
     return contents
 
 def get_real_data(use_real_data: bool, real_data="real_data.txt", example_data="example.txt") -> list[str]:
