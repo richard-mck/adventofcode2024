@@ -73,3 +73,19 @@ if __name__ == '__main__':
         [["M", "S"], ["M", "S"]], # 3
         [["S", "S"], ["M", "M"]], # 4
     ]
+    row_part_2 = rows.copy()
+    mas_counter = 0
+    # Iterate over grid, skip first row, first col and last row, last col
+    for i in range(1, len(rows) - 1):
+        for j in range(1, len(rows[i]) - 1):
+            if rows[i][j] == "A":
+                # Check the surrounding diagnonals
+                diagonals = [
+                    [rows[i - 1][j - 1], rows[i - 1][j + 1]],
+                    [rows[i + 1][j - 1], rows[i + 1][j + 1]]
+                             ]
+                if diagonals in lookup_table:
+                    mas_counter += 1
+                else:
+                    continue
+    print(mas_counter)
