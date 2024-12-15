@@ -51,8 +51,11 @@ if __name__ == '__main__':
         sum(xmas_rows) + sum(xmas_cols) + sum(rev_rows) + sum(rev_cols)
         + sum(xmas_rotated_rows) + sum(xmas_rotated_cols) + sum(samx_rotated_rows) + sum(samx_rotated_cols)
     )
-    # For every point in the grid, we need to check if xmas is present horizontal, vertical, diagonal, written backwards, or even overlapping other words
-    # The easiest way to do this would be a sweep around the compass points (including half intervals) for each point on the grid
+    # For every point in the grid, we need to check if xmas is present horizontal, vertical, diagonal, written
+    # backwards, or even overlapping other words
+    # The easiest way to do this would be a sweep around the compass points (including half intervals) for each point
+    # on the grid
     # At the edges we can discard any directions that take us off the grid
     # And we can discard any searches that take us off the grid generally
     # Alternately, we can count the occurences in each row, column, then rotate the data 45 degrees and repeat
+
