@@ -31,7 +31,7 @@ if __name__ == '__main__':
     rev_cols = [i.count(SAMX) for i in columns]
 
     rotated_rows = rotate_list_45_degrees(len(rows[0]), len(rows), rows)
-    rotated_columns = rotate_list_45_degrees(len(columns[0]), len(columns), columns)
+    rotated_columns = rotate_list_45_degrees(len(columns[0]), len(columns), columns[::-1])
     pprint.pprint(rotated_rows)
     pprint.pprint(rotated_columns)
     print(f"Len xmas_rows: {len(xmas_rows)}, Len xmas_cols: {len(xmas_cols)}")
