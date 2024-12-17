@@ -53,3 +53,17 @@ if __name__ == '__main__':
     data_2 = get_real_data(False, example_data="example2.txt")
     print(data_2)
     # Find the positions of do and don't
+    # For each line, we start with multiplication activated, and only stop it when we reach a stop signal
+    # Any commands after the stop signal are ignored until the next start signal or the end of the line
+    #
+    do_pos = []
+    dont_pos = []
+    for item in data_2:
+        do_pos, dont_pos = get_indices_of_instructions(item)
+        print(f"Indices {ENABLE_MULT}: {do_pos}, {DISABLE_MULT}: {dont_pos}")
+        all_pos = do_pos + dont_pos
+        all_pos.sort()
+        result_str = ""
+        # Here we should iterate over all positions, grabbing only substrings between active instructions
+        print(result_str)
+    print(do_pos, dont_pos, all_pos)
