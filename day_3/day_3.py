@@ -1,9 +1,25 @@
+import re
 from common_functions import get_real_data
+
+ENABLE_MULT = "do\(\)"
+DISABLE_MULT = "don't\(\)"
+
 
 def split_tuple_between_brackets(values: str) -> list[str]:
     first_bracket = values.index("(")
     second_bracket = values.index(")")
     return values[first_bracket + 1:second_bracket].split(",")
+
+
+def get_indices_of_instructions(instructions: str) -> (list[int], list[int]):
+    # Get all the active positions
+    activate = [pos.start() for pos in re.finditer(ENABLE_MULT, instructions)]
+    # We always start with multiplication active
+    activate.insert(0, 0)
+    # Get all deactivate positions
+    deactivate = [pos.start() for pos in re.finditer(DISABLE_MULT, instructions)]
+    return activate, deactivate
+
 
 if __name__ == '__main__':
     data = get_real_data(False)
@@ -34,8 +50,6 @@ if __name__ == '__main__':
     print(vals)
     print(f"Total sum {sum(vals)}")
     # Part 2
-    enable_mult = "do()"
-    disable_mult = "don't()"
     data_2 = get_real_data(False, example_data="example2.txt")
     print(data_2)
     # Find the positions of do and don't
