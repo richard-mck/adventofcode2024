@@ -64,6 +64,23 @@ if __name__ == '__main__':
         all_pos = do_pos + dont_pos
         all_pos.sort()
         result_str = ""
+        initial_pos = 0
         # Here we should iterate over all positions, grabbing only substrings between active instructions
+        for pos in all_pos:
+            if pos == all_pos[-1]:
+                result_str += item[pos: -1]
+                continue
+            if pos in do_pos:
+                print(f"Slice: {initial_pos}:{pos} {item[initial_pos:pos]}")
+                result_str += item[initial_pos:pos]
+                initial_pos = pos
+                continue
+            if pos in dont_pos and initial_pos not in dont_pos:
+                result_str += item[initial_pos:pos]
+                initial_pos = pos
+                continue
+            if pos in dont_pos and initial_pos in dont_pos:
+                initial_pos = pos
+                continue
         print(result_str)
     print(do_pos, dont_pos, all_pos)
