@@ -89,4 +89,28 @@ if __name__ == '__main__':
                 initial_pos = pos
                 continue
         print(result_str)
-    print(do_pos, dont_pos, all_pos)
+        multipliers = result_str.split("mul")
+        print(f"raw mults {multipliers}")
+        multipliers = [
+            i for i in multipliers
+            if "(" in i
+               and ")" in i
+               and i[0] == "("
+        ]
+        print(f"Split on mul {multipliers}")
+        for val in multipliers:
+            nums = split_tuple_between_brackets(val)
+            print(f"Split tuple: {nums}")
+            try:
+                first = int(nums[0])
+                second = int(nums[1])
+            except ValueError:
+                continue
+            # print(f"item: {val} nums: {nums}")
+            vals.append(int(nums[0]) * int(nums[1]))
+    print(vals)
+    print(f"Total sum {sum(vals)}")
+
+# Not 119848814
+# Not 112592686
+# Not 24155524
