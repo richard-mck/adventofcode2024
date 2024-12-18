@@ -15,7 +15,7 @@ def get_indices_of_instructions(instructions: str) -> (list[int], list[int]):
     # Get all the active positions
     activate = [pos.start() for pos in re.finditer(ENABLE_MULT, instructions)]
     # We always start with multiplication active
-    activate.insert(0, 0)
+    # activate.insert(0, 0)
     # Get all deactivate positions
     deactivate = [pos.start() for pos in re.finditer(DISABLE_MULT, instructions)]
     return activate, deactivate
@@ -56,8 +56,9 @@ if __name__ == '__main__':
     # For each line, we start with multiplication activated, and only stop it when we reach a stop signal
     # Any commands after the stop signal are ignored until the next start signal or the end of the line
     #
-    do_pos = []
-    dont_pos = []
+    # do_pos = []
+    # dont_pos = []
+    vals = []
     for item in data_2:
         do_pos, dont_pos = get_indices_of_instructions(item)
         print(f"Indices {ENABLE_MULT}: {do_pos}, {DISABLE_MULT}: {dont_pos}")
@@ -67,15 +68,20 @@ if __name__ == '__main__':
         initial_pos = 0
         # Here we should iterate over all positions, grabbing only substrings between active instructions
         for pos in all_pos:
+            # We've reached the last item, take the slice from here to the end
             if pos == all_pos[-1]:
-                result_str += item[pos: -1]
+                if pos in do_pos:
+                    print(f"Final slice: {pos}:-1 {item[pos:-1]}")
+                    result_str += item[pos: -1]
+                # initial_pos = 0
                 continue
-            if pos in do_pos:
+            if pos in do_pos and initial_pos not in dont_pos:
                 print(f"Slice: {initial_pos}:{pos} {item[initial_pos:pos]}")
                 result_str += item[initial_pos:pos]
                 initial_pos = pos
                 continue
             if pos in dont_pos and initial_pos not in dont_pos:
+                print(f"Slice: {initial_pos}:{pos} {item[initial_pos:pos]}")
                 result_str += item[initial_pos:pos]
                 initial_pos = pos
                 continue
