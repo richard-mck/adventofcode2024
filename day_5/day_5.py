@@ -82,11 +82,11 @@ from common_functions import get_real_data
 OrderRule = namedtuple("OrderRule", ["x", "y"])
 
 
-def is_x_before_y(print: list[int], rule: OrderRule) -> bool:
-    if rule.x not in print or rule.y not in print:
+def is_x_before_y(update: list[int], rule: OrderRule) -> bool:
+    if rule.x not in update or rule.y not in update:
         # We can skip rules that include numbers not in the update
         return True
-    return print.index(rule.x) < print.index(rule.y)
+    return update.index(rule.x) < update.index(rule.y)
 
 
 def swap_values(update: list[int], rule: OrderRule) -> list[int]:
