@@ -125,3 +125,21 @@ if __name__ == "__main__":
     # Part 2
     # Collect only the incorrectly ordered updates
     print(invalid_updates)
+    print(f"Ordering sorted {ordering_rules}")
+    for i, item in enumerate(invalid_updates):
+        # We need to loop over the invalid values multiple times as multiple sorts likely need to occur
+        repeat_sorting = True
+        swap_counter = 1
+        while swap_counter > 0:
+            for rule in ordering_rules:
+                if not is_x_before_y(item, rule):
+                    invalid_updates[i] = swap_values(item, rule)
+                    repeat_sorting = True
+                    swap_counter += 1
+                    continue
+            swap_counter -= 1
+    print(invalid_updates)
+    middle_items = [i[int((len(i) - 1) / 2)] for i in invalid_updates]
+    print(middle_items)
+    print(f"Middle sum of correct updates: {sum(middle_items)}")
+    # Ans 6142
