@@ -90,7 +90,7 @@ def is_x_before_y(print: list[int], rule: OrderRule) -> bool:
 
 
 if __name__ == "__main__":
-    data = get_real_data(True)
+    data = get_real_data(False)
     print(data)
     ordering_rules = [i.split("|") for i in data if "|" in i]
     ordering_rules = [OrderRule(int(i[0]), int(i[1])) for i in ordering_rules]
@@ -99,14 +99,20 @@ if __name__ == "__main__":
     print(updates)
     # Grab correct updates:
     valid_updates = []
+    invalid_updates = []
     # Iterate over updates and check if a given update meets the ordering rules
     for item in updates:
         valid_rules = [is_x_before_y(item, rule) for rule in ordering_rules]
         if False in valid_rules:
+            invalid_updates.append(item)
             continue
         valid_updates.append(item)
     print(valid_updates)
     middle_items = [i[int((len(i) - 1) / 2)] for i in valid_updates]
     print(middle_items)
-    print(sum(middle_items))
+    print(f"Middle sum of correct updates: {sum(middle_items)}")
     # Ans 5391
+
+    # Part 2
+    # Collect only the incorrectly ordered updates
+    print(invalid_updates)
