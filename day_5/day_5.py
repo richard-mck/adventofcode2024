@@ -86,9 +86,7 @@ def is_x_before_y(print: list[int], rule: OrderRule) -> bool:
     if rule.x not in print or rule.y not in print:
         # We can skip rules that include numbers not in the update
         return True
-    x_pos = print.index(rule.x)
-    y_pos = print.index(rule.y)
-    return x_pos < y_pos
+    return print.index(rule.x) < print.index(rule.y)
 
 
 if __name__ == "__main__":
