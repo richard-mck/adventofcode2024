@@ -76,5 +76,39 @@ Of course, you'll need to be careful: the actual list of page ordering rules is 
 Determine which updates are already in the correct order. What do you get if you add up the middle page number from those correctly-ordered updates?
 """
 
-if __name__ == '__main__':
-    pass
+from collections import namedtuple
+from common_functions import get_real_data
+
+OrderRule = namedtuple("OrderRule", ["x", "y"])
+
+
+def is_x_before_y(print: list[int], rule: OrderRule) -> bool:
+    if rule.x not in print or rule.y not in print:
+        # We can skip rules that include numbers not in the update
+        return True
+    x_pos = print.index(rule.x)
+    y_pos = print.index(rule.y)
+    return x_pos < y_pos
+
+
+if __name__ == "__main__":
+    data = get_real_data(True)
+    print(data)
+    ordering_rules = [i.split("|") for i in data if "|" in i]
+    ordering_rules = [OrderRule(int(i[0]), int(i[1])) for i in ordering_rules]
+    updates = [[int(j) for j in i.split(",")] for i in data if "," in i]
+    print(ordering_rules)
+    print(updates)
+    # Grab correct updates:
+    valid_updates = []
+    # Iterate over updates and check if a given update meets the ordering rules
+    for item in updates:
+        valid_rules = [is_x_before_y(item, rule) for rule in ordering_rules]
+        if False in valid_rules:
+            continue
+        valid_updates.append(item)
+    print(valid_updates)
+    middle_items = [i[int((len(i) - 1) / 2)] for i in valid_updates]
+    print(middle_items)
+    print(sum(middle_items))
+    # Ans 5391
