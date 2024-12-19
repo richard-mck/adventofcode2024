@@ -68,24 +68,24 @@ if __name__ == '__main__':
         initial_pos = 0
         # Here we should iterate over all positions, grabbing only substrings between active instructions
         for pos in all_pos:
-            # We've reached the last item, take the slice from here to the end
+            # Conditions:
+            # - between start and -1, grab substring
+            # - between stop and -1, skip substring
             if pos == all_pos[-1]:
                 if pos in do_pos:
-                    print(f"Final slice: {pos}:-1 {item[pos:-1]}")
                     result_str += item[pos: -1]
-                # initial_pos = 0
-                continue
-            if pos in do_pos and initial_pos not in dont_pos:
-                print(f"Slice: {initial_pos}:{pos} {item[initial_pos:pos]}")
+            # - between 0 and start, grab substring or between 0 and stop, grab substring
+            if initial_pos == 0 and (pos in do_pos or pos in dont_pos):
                 result_str += item[initial_pos:pos]
                 initial_pos = pos
                 continue
-            if pos in dont_pos and initial_pos not in dont_pos:
-                print(f"Slice: {initial_pos}:{pos} {item[initial_pos:pos]}")
+            # - between start and start, grab substring or between start and stop, grab substring
+            if initial_pos in do_pos and (pos in do_pos or pos in dont_pos):
                 result_str += item[initial_pos:pos]
                 initial_pos = pos
                 continue
-            if pos in dont_pos and initial_pos in dont_pos:
+            # - between stop and start, skip substring or between stop and stop, skip substring
+            if initial_pos in dont_pos and (pos in do_pos or pos in dont_pos):
                 initial_pos = pos
                 continue
         print(result_str)
@@ -114,3 +114,5 @@ if __name__ == '__main__':
 # Not 119848814
 # Not 112592686
 # Not 24155524
+# Not 86747221
+# Correct 83158140
