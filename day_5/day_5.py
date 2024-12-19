@@ -89,6 +89,15 @@ def is_x_before_y(print: list[int], rule: OrderRule) -> bool:
     return print.index(rule.x) < print.index(rule.y)
 
 
+def swap_values(update: list[int], rule: OrderRule) -> list[int]:
+    x_pos = update.index(rule.x)
+    y_pos = update.index(rule.y)
+    temp = update[x_pos]
+    update[x_pos] = update[y_pos]
+    update[y_pos] = temp
+    return update
+
+
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
