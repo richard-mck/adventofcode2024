@@ -106,9 +106,13 @@ SYMBOLS = {
 }
 
 
+def calculate_next_position(direction: str, pos: tuple[int, int]) -> tuple[int, int]:
+    return pos[0] + DIRECTION[direction][0], pos[1] + DIRECTION[direction][1]
 
-# def calculate_next_move(direction: str, pos: tuple[int]) -> tuple[int]:
-#     return pos[]
+
+def get_next_dir(symbol: str) -> str:
+    return SYMBOLS[DIRECTION[symbol][1], DIRECTION[symbol][0] * -1]
+
 
 if __name__ == "__main__":
     data = get_real_data(False)
