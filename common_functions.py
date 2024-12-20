@@ -1,5 +1,6 @@
 """Reusable functions for each day"""
 
+
 def load_input(filename: str) -> list:
     with open(filename, "r") as file:
         contents = file.read().split("\n")
@@ -7,12 +8,14 @@ def load_input(filename: str) -> list:
         return contents[:-1]
     return contents
 
+
 def get_real_data(use_real_data: bool, real_data="real_data.txt", example_data="example.txt") -> list[str]:
     """Choose whether to use example data or real data based on a bool, True for real, False for example"""
     if use_real_data:
         return load_input(real_data)
     else:
         return load_input(example_data)
+
 
 def transpose_data(row_based_data: list[str]) -> list[str]:
     """Given a grid of strings, return the same grid transformed into columns instead of rows"""
@@ -23,6 +26,7 @@ def transpose_data(row_based_data: list[str]) -> list[str]:
             temp_list.append(row_based_data[j][i])
         result.append("".join(temp_list))
     return result
+
 
 class Tile(object):
     """A single unit within a greater grid"""
@@ -75,3 +79,11 @@ class Grid(object):
                     print(self.grid[(i, j)])
                 else:
                     print(self.grid[(i, j)], end="")
+
+    def find_val_in_grid(self, value: str) -> tuple[int, int]:
+        for i in range(0, self.height):
+            for j in range(0, self.width):
+                if self.grid[(i, j)] == value:
+                    return i, j
+        print(f"Value not found in grid: {value}")
+        return -1, -1
