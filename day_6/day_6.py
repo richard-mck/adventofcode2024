@@ -114,29 +114,34 @@ def get_next_dir(symbol: str) -> str:
     return SYMBOLS[DIRECTION[symbol][1], DIRECTION[symbol][0] * -1]
 
 
+def explore_map(map_grid: Grid, pos: tuple[int, int], direction: str) -> (Grid, int):
+    step_count = 0
+    while map_grid.inside_grid(pos):
+        next_pos = calculate_next_position(map_grid.grid[pos], pos)
+        if not map_grid.inside_grid(next_pos):
+            map_grid.grid[pos] = "X"
+            return map_grid, step_count
+        if guard_map.grid[next_pos] != "#":
+            map_grid.grid[pos] = "X"
+            pos = next_pos
+            guard_map.grid[next_pos] = direction
+            step_count += 1
+        elif guard_map.grid[next_pos] == "#":
+            next_dir = get_next_dir(direction)
+            map_grid.grid[pos] = get_next_dir(direction)
+            direction = next_dir
+
+
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
     guard_map = Grid(data)
     guard_map.print_grid(True)
-    move_counter = 0
     current_dir = "^"
     current_pos = guard_map.find_val_in_grid(current_dir)
     print(current_pos)
-    while guard_map.inside_grid(current_pos):
-        next_pos = calculate_next_position(guard_map.grid[current_pos], current_pos)
-        if not guard_map.inside_grid(next_pos):
-            guard_map.grid[current_pos] = "X"
-            break
-        if guard_map.grid[next_pos] != "#":
-            guard_map.grid[current_pos] = "X"
-            move_counter += 1
-            current_pos = next_pos
-            guard_map.grid[next_pos] = current_dir
-        elif guard_map.grid[next_pos] == "#":
-            next_dir = get_next_dir(current_dir)
-            guard_map.grid[current_pos] = get_next_dir(current_dir)
-            current_dir = next_dir
+    guard_map, move_counter = explore_map(guard_map, current_pos, current_dir)
     guard_map.print_grid()
     unique_pos = "".join(guard_map.grid.values()).count("X")
     print(f"Total moves: {move_counter}, unique positions: {unique_pos}")
+    # correct answer 4977
