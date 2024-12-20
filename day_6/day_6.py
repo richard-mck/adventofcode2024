@@ -92,7 +92,20 @@ Predict the path of the guard. How many distinct positions will the guard visit 
 
 from common_functions import get_real_data, Grid
 
-DIR = {"^": [-1, 0], "V": [1, 0], "<": [0, -1], ">": [0, 1]}
+DIRECTION = {
+    "^": (-1, 0),
+    ">": (0, 1),
+    "V": (1, 0),
+    "<": (0, -1),
+}
+SYMBOLS = {
+    (-1, 0): "^",
+    (0, 1): ">",
+    (1, 0): "V",
+    (0, -1): "<",
+}
+
+
 
 # def calculate_next_move(direction: str, pos: tuple[int]) -> tuple[int]:
 #     return pos[]
