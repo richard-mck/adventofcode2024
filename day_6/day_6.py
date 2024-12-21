@@ -146,3 +146,23 @@ if __name__ == "__main__":
     unique_pos = "".join(guard_map.grid.values()).count("X")
     print(f"Total moves: {len(visited_tiles)}, unique positions: {unique_pos}")
     # correct answer 4977
+    # Part 2
+    # We need to find all the possible closed loops within the path
+    # There are six in the example
+    # One way to do this would be to do the standard loop over, identifying all the visited squares
+    # Then iterate over the map replacing each with a blocker and testing to see if the moves end up looping or not
+    # Given the complete path takes 4k+ steps, this is probably not an efficient or clever way to do it
+    # However, part 1 runs in less than a second, so maybe it's fine?
+    blocking_map = Grid(data)
+    starting_pos = blocking_map.find_val_in_grid("^")
+    print(starting_pos)
+    # The first position cannot be blocked, so remove it from the visited tiles;
+    visited_tiles.remove(starting_pos)
+    success_counter = 0
+    for tile in visited_tiles:
+        temp_map = Grid(data)
+        temp_map.grid[tile] = "#"
+        new_map, closed_loop_squares = explore_map(temp_map, starting_pos, "^")
+        if len(closed_loop_squares) > unique_pos:
+            success_counter += 1
+    print(success_counter)
