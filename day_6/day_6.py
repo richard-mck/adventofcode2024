@@ -90,7 +90,7 @@ In this example, the guard will visit 41 distinct positions on your map.
 Predict the path of the guard. How many distinct positions will the guard visit before leaving the mapped area?
 """
 
-from common_functions import get_real_data, Grid
+from common_functions import get_real_data, Grid, Tile
 
 DIRECTION = {
     "^": (-1, 0),
@@ -114,17 +114,17 @@ def get_next_dir(symbol: str) -> str:
     return SYMBOLS[DIRECTION[symbol][1], DIRECTION[symbol][0] * -1]
 
 
-def explore_map(map_grid: Grid, pos: tuple[int, int], direction: str) -> (Grid, list[tuple[int, int]]):
+def explore_map(map_grid: Grid, pos: tuple[int, int], direction: str) -> (Grid, list[Tile]):
     visited_positions = []
-    while map_grid.inside_grid(pos):
+    while map_grid.inside_grid(pos) and Tile(pos, direction) not in visited_positions:
         next_pos = calculate_next_position(map_grid.grid[pos], pos)
         if not map_grid.inside_grid(next_pos):
             map_grid.grid[pos] = "X"
-            visited_positions.append(pos)
+            visited_positions.append(Tile(pos, direction))
             return map_grid, visited_positions
         if guard_map.grid[next_pos] != "#":
             map_grid.grid[pos] = "X"
-            visited_positions.append(pos)
+            visited_positions.append(Tile(pos, direction))
             pos = next_pos
             guard_map.grid[next_pos] = direction
         elif guard_map.grid[next_pos] == "#":
@@ -157,12 +157,8 @@ if __name__ == "__main__":
     starting_pos = blocking_map.find_val_in_grid("^")
     print(starting_pos)
     # The first position cannot be blocked, so remove it from the visited tiles;
-    visited_tiles.remove(starting_pos)
-    success_counter = 0
+    visited_tiles = [i for i in visited_tiles if i.pos != starting_pos]
     for tile in visited_tiles:
         temp_map = Grid(data)
-        temp_map.grid[tile] = "#"
-        new_map, closed_loop_squares = explore_map(temp_map, starting_pos, "^")
-        if len(closed_loop_squares) > unique_pos:
-            success_counter += 1
-    print(success_counter)
+        temp_map.grid[tile.pos] = "#"
+        temp_map, closed_loop_squares = explore_map(temp_map, starting_pos, current_dir)

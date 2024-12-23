@@ -35,6 +35,9 @@ class Tile(object):
         self.pos = pos
         self.val = val
 
+    def __repr__(self):
+        return f"Pos: {self.pos} Val: {self.val}"
+
 
 class Grid(object):
     """An x/y grid of Tiles or other objects"""
