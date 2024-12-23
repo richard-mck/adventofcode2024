@@ -122,12 +122,12 @@ def explore_map(map_grid: Grid, pos: tuple[int, int], direction: str) -> (Grid, 
             map_grid.grid[pos] = "X"
             visited_positions.append(Tile(pos, direction))
             return map_grid, visited_positions
-        if guard_map.grid[next_pos] != "#":
+        if map_grid.grid[next_pos] != "#":
             map_grid.grid[pos] = "X"
             visited_positions.append(Tile(pos, direction))
             pos = next_pos
-            guard_map.grid[next_pos] = direction
-        elif guard_map.grid[next_pos] == "#":
+            map_grid.grid[next_pos] = direction
+        elif map_grid.grid[next_pos] == "#":
             next_dir = get_next_dir(direction)
             map_grid.grid[pos] = get_next_dir(direction)
             direction = next_dir
