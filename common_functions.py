@@ -38,6 +38,11 @@ class Tile(object):
     def __repr__(self):
         return f"Pos: {self.pos} Val: {self.val}"
 
+    def __eq__(self, other):
+        if not isinstance(other, Tile):
+            return NotImplemented
+        return self.pos == other.pos and self.val == other.val
+
 
 class Grid(object):
     """An x/y grid of Tiles or other objects"""

@@ -116,15 +116,20 @@ def get_next_dir(symbol: str) -> str:
 
 def explore_map(map_grid: Grid, pos: tuple[int, int], direction: str) -> (Grid, list[Tile]):
     visited_positions = []
-    while map_grid.inside_grid(pos) and Tile(pos, direction) not in visited_positions:
+    while map_grid.inside_grid(pos):
         next_pos = calculate_next_position(map_grid.grid[pos], pos)
+        visited_tile = Tile(pos, direction)
+        if visited_tile in visited_positions:
+            print("Loop found!")
+            visited_positions.append(Tile((-1, -1), "0"))
+            return map_grid, visited_positions
         if not map_grid.inside_grid(next_pos):
             map_grid.grid[pos] = "X"
-            visited_positions.append(Tile(pos, direction))
+            visited_positions.append(visited_tile)
             return map_grid, visited_positions
         if map_grid.grid[next_pos] != "#":
             map_grid.grid[pos] = "X"
-            visited_positions.append(Tile(pos, direction))
+            visited_positions.append(visited_tile)
             pos = next_pos
             map_grid.grid[next_pos] = direction
         elif map_grid.grid[next_pos] == "#":
@@ -158,7 +163,13 @@ if __name__ == "__main__":
     print(starting_pos)
     # The first position cannot be blocked, so remove it from the visited tiles;
     visited_tiles = [i for i in visited_tiles if i.pos != starting_pos]
+    block_counter = 0
+    print(f"Total tiles to visit: {len(visited_tiles)}")
     for tile in visited_tiles:
         temp_map = Grid(data)
         temp_map.grid[tile.pos] = "#"
         temp_map, closed_loop_squares = explore_map(temp_map, starting_pos, current_dir)
+        if closed_loop_squares[-1].pos == (-1, -1) and closed_loop_squares[-1].val == "0":
+            print(f"Swapped tile {tile} - index: {visited_tiles.index(tile)}")
+            block_counter += 1
+    print(f"Block count: {block_counter}")
