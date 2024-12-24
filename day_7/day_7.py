@@ -32,6 +32,7 @@ The engineers just need the total calibration result, which is the sum of the te
 Determine which equations could possibly be true. What is their total calibration result?
 """
 
+from itertools import product
 from common_functions import get_real_data
 
 
@@ -42,9 +43,21 @@ def turn_inputs_into_ints(line: str) -> (int, list[int]):
     return total, values
 
 
+def generate_operators(max_values=10) -> list[list[str]]:
+    ops = ["+", "*"]
+    result = [list(comb) for comb in product(ops, repeat=max_values)]
+    return result
+
+
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
     for row in data:
         test_val, components = turn_inputs_into_ints(row)
         print(f"Test: {test_val}, comps: {components}")
+        operators = generate_operators(len(components) - 1)
+        print(operators)
+    # We always have one fewer operators than digits
+    # Operators are always evaluated sequentially left to right
+    # Can we generate all possible operators for a given sequence?
+    # Yes, with itertools!
