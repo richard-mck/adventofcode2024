@@ -30,6 +30,21 @@ Only three of the above equations can be made true by inserting operators:
 The engineers just need the total calibration result, which is the sum of the test values from just the equations that could possibly be true. In the above example, the sum of the test values for the three equations listed above is 3749.
 
 Determine which equations could possibly be true. What is their total calibration result?
-
-
 """
+
+from common_functions import get_real_data
+
+
+def turn_inputs_into_ints(line: str) -> (int, list[int]):
+    components = line.split(":")
+    total = int(components[0])
+    values = [int(i) for i in components[1].split()]
+    return total, values
+
+
+if __name__ == "__main__":
+    data = get_real_data(False)
+    print(data)
+    for row in data:
+        test_val, components = turn_inputs_into_ints(row)
+        print(f"Test: {test_val}, comps: {components}")
