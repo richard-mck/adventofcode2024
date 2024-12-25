@@ -43,8 +43,8 @@ def turn_inputs_into_ints(line: str) -> (int, list[int]):
     return total, values
 
 
-def generate_operators(max_values=10) -> list[list[str]]:
-    ops = ["+", "*"]
+def generate_operators(max_values: int, include_pipe=False) -> list[list[str]]:
+    ops = ["+", "*"] if not include_pipe else ["+", "*", "||"]
     result = [list(comb) for comb in product(ops, repeat=max_values)]
     return result
 
@@ -60,17 +60,22 @@ def do_operation(ops: list[str], vals: list[int]):
             result += vals[i]
         elif ops[i - 1] == "*":
             result *= vals[i]
+        elif ops[i - 1] == "||":
+            piped = int(str(result) + str(vals[i]))
+            print(f"Piping: {result} || {vals[i]} = {piped}")
+            result = piped
     return result
 
 
 if __name__ == "__main__":
     data = get_real_data(False)
+    calculate_part_2 = False
     print(data)
     result_vals = []
     for row in data:
         test_val, components = turn_inputs_into_ints(row)
         print(f"Test: {test_val}, comps: {components}")
-        operators = generate_operators(len(components) - 1)
+        operators = generate_operators(len(components) - 1, calculate_part_2)
         print(operators)
         for op in operators:
             print(f"Current op: {op}, seeking: {test_val}")
