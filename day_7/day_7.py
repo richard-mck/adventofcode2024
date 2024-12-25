@@ -49,6 +49,20 @@ def generate_operators(max_values=10) -> list[list[str]]:
     return result
 
 
+def do_operation(ops: list[str], vals: list[int]):
+    # Safety check!
+    assert len(ops) == len(vals) - 1
+
+    result = vals[0]
+    # Iterate to the end from position 1
+    for i, j in enumerate(vals[1:], 1):
+        if ops[i - 1] == "+":
+            result += vals[i]
+        elif ops[i - 1] == "*":
+            result *= vals[i]
+    return result
+
+
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
