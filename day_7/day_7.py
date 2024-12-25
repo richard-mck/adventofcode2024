@@ -66,12 +66,21 @@ def do_operation(ops: list[str], vals: list[int]):
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
+    result_vals = []
     for row in data:
         test_val, components = turn_inputs_into_ints(row)
         print(f"Test: {test_val}, comps: {components}")
         operators = generate_operators(len(components) - 1)
         print(operators)
+        for op in operators:
+            print(f"Current op: {op}, seeking: {test_val}")
+            if do_operation(op, components) == test_val:
+                result_vals.append(test_val)
     # We always have one fewer operators than digits
     # Operators are always evaluated sequentially left to right
     # Can we generate all possible operators for a given sequence?
     # Yes, with itertools!
+
+    # Here we get unique values by using set, then convert to list so we can sum it
+    result_vals = sum(list(set(result_vals)))
+    print(result_vals)
