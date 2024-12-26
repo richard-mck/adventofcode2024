@@ -74,8 +74,20 @@ Because the topmost A-frequency antenna overlaps with a 0-frequency antinode, th
 Calculate the impact of the signal. How many unique locations within the bounds of the map contain an antinode?
 """
 
-from common_functions import get_real_data
+from common_functions import get_real_data, make_dict_grid
 
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
+    letter_position = {}
+    antenna_grid = make_dict_grid(data)
+    for item in antenna_grid:
+        value = antenna_grid[item]
+        if value == ".":
+            continue
+        if value in letter_position.keys():
+            letter_position[value].append(item)
+        else:
+            letter_position[value] = [item]
+    print(letter_position)
+    print(antenna_grid)
