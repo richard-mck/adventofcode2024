@@ -74,15 +74,26 @@ Because the topmost A-frequency antenna overlaps with a 0-frequency antinode, th
 Calculate the impact of the signal. How many unique locations within the bounds of the map contain an antinode?
 """
 
-from common_functions import get_real_data, make_dict_grid
+from common_functions import get_real_data, Grid
+
+
+def calculate_distance_between_points(pos_a: tuple[int, int], pos_b: tuple[int, int]) -> tuple[int, int]:
+    x_distance = pos_a[1] - pos_b[1]
+    y_distance = pos_a[0] - pos_b[0]
+    return x_distance, y_distance
+
 
 if __name__ == "__main__":
     data = get_real_data(False)
     print(data)
     letter_position = {}
-    antenna_grid = make_dict_grid(data)
-    for item in antenna_grid:
-        value = antenna_grid[item]
+    antenna_grid = Grid(data)
+    # Grab the max bounds of the grid so we can establish whether nodes are inside it or not
+    max_x = antenna_grid.width
+    max_y = antenna_grid.height
+    print(f"Max grid size: {max_x} by {max_y}")
+    for item in antenna_grid.grid:
+        value = antenna_grid.grid[item]
         if value == ".":
             continue
         if value in letter_position.keys():
@@ -90,4 +101,14 @@ if __name__ == "__main__":
         else:
             letter_position[value] = [item]
     print(letter_position)
-    print(antenna_grid)
+    antenna_grid.print_grid()
+
+    for letter in letter_position:
+        print(f"Checking {letter}")
+        for i in range(len(letter_position[letter])):
+            x_dist, y_dist = calculate_distance_between_points(
+                letter_position[letter][i], letter_position[letter][i - 1]
+            )
+            print(f"Letter: {letter} - x: {x_dist}, y: {y_dist}")
+            alt_x = x_dist * -1
+            alt_y = y_dist * -1
