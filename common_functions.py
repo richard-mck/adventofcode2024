@@ -17,6 +17,14 @@ def get_real_data(use_real_data: bool, real_data="real_data.txt", example_data="
         return load_input(example_data)
 
 
+def make_dict_grid(row_based_data: list[str]) -> dict[tuple[int, int], str]:
+    result = {}
+    for i in range(len(row_based_data)):
+        for j in range(len(row_based_data[i])):
+            result[(i, j)] = row_based_data[i][j]
+    return result
+
+
 def transpose_data(row_based_data: list[str]) -> list[str]:
     """Given a grid of strings, return the same grid transformed into columns instead of rows"""
     result = []
