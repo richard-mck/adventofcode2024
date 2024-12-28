@@ -102,13 +102,26 @@ if __name__ == "__main__":
             letter_position[value] = [item]
     print(letter_position)
     antenna_grid.print_grid()
-
+    node_counter = 0
     for letter in letter_position:
         print(f"Checking {letter}")
         for i in range(len(letter_position[letter])):
-            x_dist, y_dist = calculate_distance_between_points(
-                letter_position[letter][i], letter_position[letter][i - 1]
-            )
-            print(f"Letter: {letter} - x: {x_dist}, y: {y_dist}")
+            pos_a = letter_position[letter][i]
+            pos_b = letter_position[letter][i - 1]
+            x_dist, y_dist = calculate_distance_between_points(pos_a, pos_b)
+            print(f"Letter: {letter}, A:{pos_a}, B:{pos_b} - x: {x_dist}, y: {y_dist}")
             alt_x = x_dist * -1
             alt_y = y_dist * -1
+            pos_a_node = (pos_a[1] - x_dist, pos_a[0] - y_dist)
+            pos_a_antinode = (pos_a[1] - alt_x, pos_a[0] - alt_y)
+            pos_b_node = (pos_b[1] - x_dist, pos_b[0] - y_dist)
+            pos_b_antinode = (pos_b[1] - alt_x, pos_b[0] - alt_y)
+            nodes = [pos_a_node, pos_a_antinode, pos_b_node, pos_b_antinode]
+            print(f"Node positions: {nodes}")
+
+            for node in nodes:
+                if antenna_grid.inside_grid(node) and antenna_grid.grid[node] == ".":
+                    antenna_grid.grid[node] = "#"
+                    node_counter += 1
+    antenna_grid.print_grid(include_row_nums=True)
+    print(f"Node count: {node_counter}")
