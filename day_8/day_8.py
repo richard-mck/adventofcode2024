@@ -92,6 +92,7 @@ if __name__ == "__main__":
     max_x = antenna_grid.width
     max_y = antenna_grid.height
     print(f"Max grid size: {max_x} by {max_y}")
+    # Get the positions of all countable characters to find pairs
     for item in antenna_grid.grid:
         value = antenna_grid.grid[item]
         if value == ".":
@@ -103,6 +104,7 @@ if __name__ == "__main__":
     print(letter_position)
     antenna_grid.print_grid()
     node_counter = 0
+    # Iterate over letters, comparing pairs to establish whether they create nodes or not
     for letter in letter_position:
         print(f"Checking {letter}")
         for i in range(len(letter_position[letter])):
