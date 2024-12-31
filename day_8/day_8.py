@@ -110,6 +110,11 @@ if __name__ == "__main__":
         for i in range(len(letter_position[letter])):
             pos_a = letter_position[letter][i]
             pos_b = letter_position[letter][i - 1]
+            antenna_grid.grid[pos_a] = "1"
+            antenna_grid.grid[pos_b] = "2"
+            antenna_grid.print_grid()
+            antenna_grid.grid[pos_a] = letter
+            antenna_grid.grid[pos_b] = letter
             x_dist, y_dist = calculate_distance_between_points(pos_a, pos_b)
             print(f"Letter: {letter}, A:{pos_a}, B:{pos_b} - x: {x_dist}, y: {y_dist}")
             alt_x = x_dist * -1
